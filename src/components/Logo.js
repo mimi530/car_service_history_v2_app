@@ -1,23 +1,27 @@
-import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 
-function Logo({style}) {
+function Logo({ style }) {
     return (
         <View style={[styles.logoContainer, style]}>
-            <Image resizeMode="contain" style={styles.logo} source={require('../assets/logo_white.png')}/>
+            <Image
+                resizeMode="contain"
+                style={styles.logo}
+                source={require("../assets/logo_white.png")}
+            />
         </View>
-    )
+    );
 }
 
-export default Logo
+export default Logo;
 
 const styles = StyleSheet.create({
     logo: {
         width: 300,
-        height: 100
+        height: 100,
     },
     logoContainer: {
         justifyContent: "center",
-        alignItems: 'center',
-    }
-})
+        alignItems: "center",
+    },
+});

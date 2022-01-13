@@ -4,4 +4,6 @@ export default {
     black: "#000",
     white: "#fff",
     background: "#1a202c",
+    danger: "#FC5E3B",
+    warning: "#FCDF3B",
 }

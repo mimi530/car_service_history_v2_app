@@ -5,6 +5,7 @@ import CarNavigator from "./CarNavigator";
 import AccountScreen from "../screens/AccountScreen";
 import { StyleSheet } from "react-native";
 import colors from "../constants/colors";
+import routes from "./routes";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,15 +16,16 @@ const AppNavigator = () => (
             tabBarStyle: styles.bar,
             tabBarInactiveTintColor: colors.white,
             tabBarLabelStyle: styles.label,
+            unmountOnBlur: true,
         }}
     >
         <Tab.Screen
-            name="Garaż"
+            name={routes.GARAGE}
             component={CarNavigator}
             options={{
                 tabBarIcon: ({ color, size }) => (
                     <MaterialCommunityIcons
-                        name="car"
+                        name="car-side"
                         color={color}
                         size={size}
                     />
@@ -31,7 +33,7 @@ const AppNavigator = () => (
             }}
         />
         <Tab.Screen
-            name="Konto"
+            name={routes.ACCOUNT}
             component={AccountScreen}
             options={{
                 tabBarIcon: ({ color, size }) => (

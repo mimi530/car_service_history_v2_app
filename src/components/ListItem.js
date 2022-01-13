@@ -1,23 +1,54 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import colors from "../constants/colors";
 import AppText from "./AppText";
+import { Swipeable } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function ListItem({ title, description, milage, date }) {
+function ListItem({
+    title,
+    description,
+    milage,
+    date,
+    icon,
+    renderRightActions,
+    onPress,
+}) {
     return (
-        <View style={styles.container}>
-            <AppText style={styles.title}>{title}</AppText>
-            {description && (
-                <AppText style={styles.description}>{description}</AppText>
-            )}
-            <View style={styles.footer}>
-                <AppText style={styles.milage}>
-                    {milage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") +
-                        " km"}
-                </AppText>
-                {date && <AppText style={styles.date}>{date}</AppText>}
-            </View>
-        </View>
+        <Swipeable renderRightActions={renderRightActions}>
+            <TouchableWithoutFeedback onPress={onPress}>
+                <View style={styles.container}>
+                    {icon && (
+                        <View style={styles.iconBox}>
+                            <MaterialCommunityIcons
+                                name={icon}
+                                size={40}
+                                color={colors.white}
+                            />
+                        </View>
+                    )}
+                    <View style={styles.content}>
+                        <AppText style={styles.title}>{title}</AppText>
+                        {description && (
+                            <AppText style={styles.description}>
+                                {description}
+                            </AppText>
+                        )}
+                        <View style={styles.footer}>
+                            <AppText style={styles.milage}>
+                                {milage
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ") +
+                                    " km"}
+                            </AppText>
+                            {date && (
+                                <AppText style={styles.date}>{date}</AppText>
+                            )}
+                        </View>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
+        </Swipeable>
     );
 }
 
@@ -29,7 +60,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 15,
         borderRadius: 20,
-        marginBottom: 20,
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    iconBox: {
+        borderRadius: 50,
+        alignItems: "center",
+        justifyContent: "center",
+        height: 50,
+        width: 50,
+        marginRight: 10,
+    },
+    content: {
+        flex: 1,
     },
     date: {
         backgroundColor: colors.primary,

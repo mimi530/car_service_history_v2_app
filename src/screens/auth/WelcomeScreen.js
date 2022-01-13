@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import AppButton from '../components/AppButton'
-import AppScreen from '../components/AppScreen'
-import Logo from '../components/Logo'
-import routes from '../navigation/routes'
+import AppButton from '../../components/AppButton'
+import AppScreen from '../../components/AppScreen'
+import Logo from '../../components/Logo'
+import routes from '../../navigation/routes'
 
 const WelcomeScreen = ({navigation}) => {
     return (

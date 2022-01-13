@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
     screen: {
         paddingTop: Constants.statusBarHeight,
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         width: "100%",
         backgroundColor: colors.background
     },

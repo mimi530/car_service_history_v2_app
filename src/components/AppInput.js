@@ -3,7 +3,7 @@ import { View, TextInput, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../constants/colors";
 
-function AppInput({ icon, width = "100%", ...otherProps }) {
+function AppInput({ icon, width = "100%", value, ...otherProps }) {
   return (
     <View style={[styles.container, { width }]}>
       {icon && (
@@ -17,6 +17,7 @@ function AppInput({ icon, width = "100%", ...otherProps }) {
       <TextInput
         placeholderTextColor={colors.white}
         style={styles.text}
+        value={value}
         {...otherProps}
       />
     </View>
@@ -30,12 +31,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 15,
     marginVertical: 10,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   text: {
     color: colors.white,
     fontSize: 15,
-    width: '100%'
+    flex: 1
   },
   icon: {
     marginRight: 10,
