@@ -1,7 +1,9 @@
 {
   "expo": {
-    "name": "application",
-    "slug": "application",
+    "name": "Car Story",
+    "slug": "car-story",
+    "privacy": "unlisted",
+    "description": "An application that allows you to keep track of your car's repairs.",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -21,6 +23,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "pl.mdomzalski.carstory",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

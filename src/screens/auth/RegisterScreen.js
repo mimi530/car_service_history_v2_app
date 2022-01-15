@@ -37,7 +37,6 @@ const RegisterScreen = ({ navigation }) => {
             if (response.data) setError(response.data.errors.email[0]);
             else {
                 alert("Nie udało się zarejestrować.");
-                console.log(response);
             }
             return;
         }

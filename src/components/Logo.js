@@ -7,7 +7,7 @@ function Logo({ style }) {
             <Image
                 resizeMode="contain"
                 style={styles.logo}
-                source={require("../assets/logo_white.png")}
+                source={require("../assets/logo.png")}
             />
         </View>
     );

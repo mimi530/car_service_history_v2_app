@@ -27,7 +27,7 @@ const RepairCreateScreen = ({ navigation, route }) => {
         setLoading(true);
         const response = await repairsApi.addRepair(car, repair);
         setLoading(false);
-        console.log(response);
+
         if (!response.ok) return alert("Nie udało się zapisać samochodu.");
         return navigation.push(routes.REPAIRS, { car });
     };
