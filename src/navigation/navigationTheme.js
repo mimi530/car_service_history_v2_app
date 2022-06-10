@@ -8,4 +8,5 @@ export default {
     primary: colors.primary,
     background: colors.background,
   },
+  zIndex: 1,
 };

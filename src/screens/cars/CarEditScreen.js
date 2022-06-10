@@ -8,15 +8,16 @@ import * as Yup from "yup";
 import AppText from "../../components/AppText";
 import LoadingScreen from "../LoadingScreen";
 import routes from "../../navigation/routes";
+import i18n from "../../config/i18n";
 
 const CarEditScreen = ({ navigation, route }) => {
     const [loading, setLoading] = useState(false);
     const { car, handleEdit } = route.params;
     const validationSchema = Yup.object().shape({
         name: Yup.string()
-            .required("Nazwa samochodu jest wymagana")
-            .label("Nazwa samochodu"),
-        milage: Yup.string().label("Przebieg"),
+            .required(i18n.t('Car name is required'))
+            .label(i18n.t('Car name')),
+        milage: Yup.string().label(i18n.t('Milage')),
     });
 
     const handleSubmit = (values) => {
@@ -28,7 +29,7 @@ const CarEditScreen = ({ navigation, route }) => {
         <AppScreen>
             <LoadingScreen visible={loading} />
             <View style={styles.container}>
-                <AppText style={styles.title}>Edycja samochodu</AppText>
+                <AppText style={styles.title}>{i18n.t('Edit car')}</AppText>
                 <View>
                     <AppForm
                         initialValues={{
@@ -44,7 +45,7 @@ const CarEditScreen = ({ navigation, route }) => {
                             autoCorrect={false}
                             icon="car"
                             name="name"
-                            placeholder="Nazwa samochodu"
+                            placeholder={i18n.t('Car name')}
                         />
                         <AppFormField
                             autoCapitalize="none"
@@ -52,9 +53,9 @@ const CarEditScreen = ({ navigation, route }) => {
                             icon="speedometer"
                             keyboardType="numeric"
                             name="milage"
-                            placeholder="Przebieg"
+                            placeholder={i18n.t('Milage')}
                         />
-                        <SubmitButton title="Zaktualizuj" />
+                        <SubmitButton title={i18n.t('Update')} />
                     </AppForm>
                 </View>
                 <View></View>

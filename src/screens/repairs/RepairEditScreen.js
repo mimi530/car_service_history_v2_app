@@ -10,6 +10,7 @@ import repairsApi from "../../api/repairs";
 import routes from "../../navigation/routes";
 import LoadingScreen from "../LoadingScreen";
 import AppDatePicker from "../../components/forms/AppDatePicker";
+import i18n from "../../config/i18n";
 
 const RepairEditScreen = ({ navigation, route }) => {
     const [loading, setLoading] = useState(false);
@@ -17,10 +18,10 @@ const RepairEditScreen = ({ navigation, route }) => {
 
     const validationSchema = Yup.object().shape({
         title: Yup.string()
-            .required("Tytuł naprawy jest wymagany")
-            .label("Tytuł naprawy"),
-        milage: Yup.string().label("Przebieg"),
-        description: Yup.string().label("Opis"),
+            .required(i18n.t('Title is required'))
+            .label(i18n.t('Repair title')),
+        milage: Yup.string().label(i18n.t('Mialge')),
+        description: Yup.string().label(i18n.t('Description')),
     });
 
     const handleSubmit = async (values) => {
@@ -28,7 +29,7 @@ const RepairEditScreen = ({ navigation, route }) => {
         const response = await repairsApi.editRepair(car, repair, values);
         setLoading(false);
 
-        if (!response.ok) return alert("Nie udało się zaktualizować naprawy.");
+        if (!response.ok) return alert(i18n.t('There was an error, try again later'));
         return navigation.push(routes.REPAIRS, { car });
     };
 
@@ -36,7 +37,7 @@ const RepairEditScreen = ({ navigation, route }) => {
         <AppScreen>
             <LoadingScreen visible={loading} />
             <View style={styles.container}>
-                <AppText style={styles.title}>Edycja samochodu</AppText>
+                <AppText style={styles.title}>{i18n.t('Edit repair')}</AppText>
                 <View>
                     <AppForm
                         initialValues={{
@@ -53,7 +54,7 @@ const RepairEditScreen = ({ navigation, route }) => {
                             autoCorrect={false}
                             icon="wrench"
                             name="title"
-                            placeholder="Nazwa samochodu"
+                            placeholder={i18n.t('Repair title')}
                         />
                         <AppFormField
                             autoCapitalize="none"
@@ -61,7 +62,7 @@ const RepairEditScreen = ({ navigation, route }) => {
                             icon="speedometer"
                             keyboardType="numeric"
                             name="milage"
-                            placeholder="Przebieg"
+                            placeholder={i18n.t('Milage')}
                         />
                         <AppDatePicker name="date" startDate={repair.date} />
                         <AppFormField
@@ -69,10 +70,10 @@ const RepairEditScreen = ({ navigation, route }) => {
                             autoCorrect={false}
                             icon="dots-horizontal-circle-outline"
                             name="description"
-                            placeholder="Nazwa samochodu"
+                            placeholder={i18n.t('Description')}
                             multiline
                         />
-                        <SubmitButton title="Zaktualizuj" />
+                        <SubmitButton title={i18n.t('Update')} />
                     </AppForm>
                 </View>
                 <View></View>

@@ -7,25 +7,27 @@ import AppText from "../../components/AppText";
 import ListItem from "../../components/ListItem";
 import ListItemDeleteAction from "../../components/ListItem/ListItemDeleteAction";
 import ListItemEditAction from "../../components/ListItem/ListItemEditAction";
+import i18n from "../../config/i18n";
 import colors from "../../constants/colors";
 import routes from "../../navigation/routes";
 import LoadingScreen from "../LoadingScreen";
 
 const RepairsScreen = ({ navigation, route }) => {
     const [repairs, setRepairs] = useState([]);
-    const [loading, setLoading] = useState(false)
-    const car = route.params.car
+    const [loading, setLoading] = useState(false);
+    const car = route.params.car;
 
     useEffect(() => {
         loadRepairs();
     }, []);
 
     const loadRepairs = async () => {
-        setLoading(true)
+        setLoading(true);
         const response = await repairsApi.getRepairs(car);
-        setLoading(false)
-        
-        if(!response.ok) return alert('Nie udało sie pobrać napraw.')
+        setLoading(false);
+
+        if (!response.ok)
+            return alert(i18n.t("There was an error, try again later"));
         setRepairs(response.data.repairs);
     };
 
@@ -34,7 +36,8 @@ const RepairsScreen = ({ navigation, route }) => {
         const response = await repairsApi.deleteRepair(car, repair);
         setLoading(false);
 
-        if (!response.ok) return alert("Nie udało się usunąć.");
+        if (!response.ok)
+            return alert(i18n.t("There was an error, try again later"));
         loadRepairs();
     };
 
@@ -43,16 +46,17 @@ const RepairsScreen = ({ navigation, route }) => {
         const response = await repairsApi.editRepair(car, repair);
         setLoading(false);
 
-        if (!response.ok) return alert("Nie udało się zaktualizować.");
+        if (!response.ok)
+            return alert(i18n.t("There was an error, try again later"));
         loadRepairs();
-    }
+    };
 
     return (
         <AppScreen>
-            <LoadingScreen visible={loading}/>
+            <LoadingScreen visible={loading} />
             <View style={styles.container}>
                 <AppText style={styles.header}>{car.name}</AppText>
-                <AppText style={styles.title}>Naprawy</AppText>
+                <AppText style={styles.title}>{i18n.t("Repairs")}</AppText>
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     data={repairs}
@@ -65,8 +69,17 @@ const RepairsScreen = ({ navigation, route }) => {
                             milage={item.milage}
                             renderRightActions={() => (
                                 <View style={styles.actionsContainer}>
-                                    <ListItemEditAction handleEdit={() => navigation.navigate(routes.EDIT_REPAIR, {car, repair: item})} />
-                                    <ListItemDeleteAction handleDelete={() => handleDelete(item)} />
+                                    <ListItemEditAction
+                                        handleEdit={() =>
+                                            navigation.navigate(
+                                                routes.EDIT_REPAIR,
+                                                { car, repair: item }
+                                            )
+                                        }
+                                    />
+                                    <ListItemDeleteAction
+                                        handleDelete={() => handleDelete(item)}
+                                    />
                                 </View>
                             )}
                         />
@@ -76,7 +89,9 @@ const RepairsScreen = ({ navigation, route }) => {
                     )}
                 />
             </View>
-            <AddButton onPress={() => navigation.push(routes.ADD_REPAIR, {car})} />
+            <AddButton
+                onPress={() => navigation.push(routes.ADD_REPAIR, { car })}
+            />
         </AppScreen>
     );
 };
@@ -92,7 +107,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        textAlign: 'center',
+        textAlign: "center",
         fontWeight: "bold",
         marginBottom: 20,
         paddingTop: 10,
@@ -100,7 +115,7 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 25,
         color: colors.primary,
-        textAlign: 'center',
+        textAlign: "center",
         fontWeight: "bold",
         marginBottom: 20,
         paddingTop: 10,

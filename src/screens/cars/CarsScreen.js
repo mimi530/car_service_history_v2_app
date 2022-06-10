@@ -7,6 +7,7 @@ import AppText from "../../components/AppText";
 import ListItem from "../../components/ListItem";
 import ListItemDeleteAction from "../../components/ListItem/ListItemDeleteAction";
 import ListItemEditAction from "../../components/ListItem/ListItemEditAction";
+import i18n from "../../config/i18n";
 import routes from "../../navigation/routes";
 import LoadingScreen from "../LoadingScreen";
 
@@ -22,7 +23,8 @@ const CarsScreen = ({ navigation }) => {
         setLoading(true);
         const response = await carsApi.getCars();
         setLoading(false);
-        if (!response.ok) return alert("Nie udało się pobrać samochodów.");
+        if (!response.ok)
+            return alert(i18n.t("There was an error, try again later"));
         setCars(response.data.cars);
     };
 
@@ -31,7 +33,8 @@ const CarsScreen = ({ navigation }) => {
         const response = await carsApi.deleteCar(car);
         setLoading(false);
 
-        if (!response.ok) return alert("Nie udało się usunąć.");
+        if (!response.ok)
+            return alert(i18n.t("There was an error, try again later"));
         loadCars();
     };
 
@@ -41,7 +44,7 @@ const CarsScreen = ({ navigation }) => {
         setLoading(false);
 
         if (!response.ok)
-            return alert("Nie udało się zaktualizować samochodu.");
+            return alert(i18n.t("There was an error, try again later"));
         loadCars();
     };
 
@@ -49,7 +52,7 @@ const CarsScreen = ({ navigation }) => {
         <AppScreen>
             <LoadingScreen visible={loading} />
             <View style={styles.container}>
-                <AppText style={styles.title}>Samochody</AppText>
+                <AppText style={styles.title}>{i18n.t("Cars")}</AppText>
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     data={cars}

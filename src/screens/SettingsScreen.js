@@ -5,9 +5,17 @@ import AppScreen from "../components/AppScreen";
 import AppText from "../components/AppText";
 import colors from "../constants/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import i18n from "../config/i18n";
+import routes from "../navigation/routes";
+import * as Linking from "expo-linking";
 
-const AccountScreen = ({ navigation }) => {
+const SettingsScreen = ({ navigation }) => {
     const { user, logOut } = useAuth();
+
+    const handleBuyCoffee = () => {
+        Linking.openURL("https://buycoffee.to/carstoryapp");
+    };
+
     return (
         <AppScreen>
             <View style={styles.container}>
@@ -32,7 +40,38 @@ const AccountScreen = ({ navigation }) => {
                             color={colors.primary}
                             style={styles.logoutIcon}
                         />
-                        <AppText>Wyloguj</AppText>
+                        <AppText>{i18n.t("Logout")}</AppText>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate(routes.FEEDBACK);
+                    }}
+                >
+                    <View style={styles.logout}>
+                        <MaterialCommunityIcons
+                            name="email-edit"
+                            size={25}
+                            color={colors.primary}
+                            style={styles.logoutIcon}
+                        />
+                        <AppText>{i18n.t("Give feedback")}</AppText>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleBuyCoffee}>
+                    <View style={styles.coffee}>
+                        <MaterialCommunityIcons
+                            name="coffee"
+                            size={25}
+                            color={colors.white}
+                            style={styles.logoutIcon}
+                        />
+                        <View>
+                            <AppText>{i18n.t("Like the app?")}</AppText>
+                            <AppText>
+                                {i18n.t("You can buy me a coffee :)")}
+                            </AppText>
+                        </View>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -40,7 +79,7 @@ const AccountScreen = ({ navigation }) => {
     );
 };
 
-export default AccountScreen;
+export default SettingsScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -81,5 +120,13 @@ const styles = StyleSheet.create({
         marginRight: 20,
         alignItems: "center",
         justifyContent: "center",
+    },
+    coffee: {
+        backgroundColor: colors.green,
+        width: "100%",
+        flexDirection: "row",
+        padding: 20,
+        alignItems: "center",
+        marginTop: 20,
     },
 });

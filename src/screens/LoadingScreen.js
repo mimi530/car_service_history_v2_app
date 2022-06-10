@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         width: "100%",
         padding: 30,
         backgroundColor: colors.background,
+        zIndex: 2,
     },
     animation: {
         width: 150,

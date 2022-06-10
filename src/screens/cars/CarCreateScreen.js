@@ -9,15 +9,16 @@ import AppText from "../../components/AppText";
 import carsApi from "../../api/cars";
 import routes from "../../navigation/routes";
 import LoadingScreen from "../LoadingScreen";
+import i18n from "../../config/i18n";
 
 const CarCreateScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
-            .required("Nazwa samochodu jest wymagana")
-            .label("Nazwa samochodu"),
-        milage: Yup.string().label("Przebieg"),
+            .required(i18n.t('Car name is required'))
+            .label(i18n.t('Car name')),
+        milage: Yup.string().label(i18n.t('Milage')),
     });
 
     const handleSubmit = async (car) => {
@@ -25,7 +26,7 @@ const CarCreateScreen = ({ navigation }) => {
         const response = await carsApi.addCar(car);
         setLoading(false);
 
-        if (!response.ok) return alert("Nie udało się zapisać samochodu.");
+        if (!response.ok) return alert(i18n.t('There was an error, try again later'));
         return navigation.push(routes.CARS);
     };
 
@@ -33,7 +34,7 @@ const CarCreateScreen = ({ navigation }) => {
         <AppScreen>
             <LoadingScreen visible={loading} />
             <View style={styles.container}>
-                <AppText style={styles.title}>Dodawanie samochodu</AppText>
+                <AppText style={styles.title}>{i18n.t('Add car')}</AppText>
                 <View>
                     <AppForm
                         initialValues={{ name: "", milage: "" }}
@@ -46,7 +47,7 @@ const CarCreateScreen = ({ navigation }) => {
                             icon="car"
                             keyboardType="email-address"
                             name="name"
-                            placeholder="Nazwa samochodu"
+                            placeholder={i18n.t('Car name')}
                         />
                         <AppFormField
                             autoCapitalize="none"
@@ -54,9 +55,9 @@ const CarCreateScreen = ({ navigation }) => {
                             icon="speedometer"
                             keyboardType="numeric"
                             name="milage"
-                            placeholder="Przebieg"
+                            placeholder={i18n.t('Milage')}
                         />
-                        <SubmitButton title="Dodaj samochód" />
+                        <SubmitButton title={i18n.t('Add car')} />
                     </AppForm>
                 </View>
                 <View></View>

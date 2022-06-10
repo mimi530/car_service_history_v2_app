@@ -14,6 +14,8 @@ import authApi from "../../api/auth";
 import ErrorMessage from "../../components/forms/AppErrorMessage";
 import useAuth from "../../auth/useAuth";
 import AppActivityIndicator from "../../components/AppActivityIndicator";
+import OfflineNotice from "../../components/OfflineNotice";
+import i18n from "../../config/i18n";
 
 const LoginScreen = ({ navigation }) => {
     const [loginFailed, setloginFailed] = useState(false);
@@ -22,13 +24,13 @@ const LoginScreen = ({ navigation }) => {
 
     const validationSchema = Yup.object().shape({
         email: Yup.string()
-            .required("Pole email jest wymagane")
-            .email("Email musi być prawidłowym adresem email")
-            .label("Email"),
+            .required()
+            .email()
+            .label(i18n.t('Email')),
         password: Yup.string()
-            .required("Pole hasło jest wymagane")
-            .min(8, "Hasło musi mieć zawierać 8 znaków")
-            .label("Hasło"),
+            .required()
+            .min(8)
+            .label(i18n.t('Password')),
     });
 
     const handleSubmit = async ({ email, password }) => {
@@ -63,7 +65,7 @@ const LoginScreen = ({ navigation }) => {
                                 icon="email"
                                 keyboardType="email-address"
                                 name="email"
-                                placeholder="Email"
+                                placeholder={i18n.t('Email')}
                                 textContentType="emailAddress"
                             />
                             <AppFormField
@@ -71,26 +73,26 @@ const LoginScreen = ({ navigation }) => {
                                 autoCorrect={false}
                                 icon="lock"
                                 name="password"
-                                placeholder="Hasło"
+                                placeholder={i18n.t('Password')}
                                 secureTextEntry
                                 textContentType="password"
                             />
                             <ErrorMessage
-                                error="Nieprawidłowy email lub hasło."
+                                error={i18n.t('Wrong email or password')}
                                 visible={loginFailed}
                             />
-                            <SubmitButton title="Zaloguj się" />
+                            <SubmitButton title={i18n.t('Log in')} />
                         </AppForm>
                     </View>
                     <View style={styles.registerContainer}>
                         <AppText style={styles.registerText}>
-                            Nie masz jeszcze konta?
+                            {i18n.t('Don\'t have an account yet?')}
                         </AppText>
                         <AppText
                             style={styles.registerLink}
                             onPress={() => navigation.navigate(routes.REGISTER)}
                         >
-                            Zarejestruj się
+                            {i18n.t('Register')}
                         </AppText>
                     </View>
                 </View>

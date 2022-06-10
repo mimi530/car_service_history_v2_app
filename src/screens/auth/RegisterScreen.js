@@ -14,18 +14,19 @@ import authApi from "../../api/auth";
 import useAuth from "../../auth/useAuth";
 import ErrorMessage from "../../components/forms/AppErrorMessage";
 import AppActivityIndicator from "../../components/AppActivityIndicator";
+import i18n from "../../config/i18n";
 
 const RegisterScreen = ({ navigation }) => {
     const { logIn } = useAuth();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const validationSchema = Yup.object().shape({
-        email: Yup.string().required().email().label("Email"),
-        name: Yup.string().required().label("Nazwa użytkownika"),
-        password: Yup.string().required().min(8).label("Hasło"),
+        email: Yup.string().required().email().label(i18n.t('Email')),
+        name: Yup.string().required().label(i18n.t('Name')),
+        password: Yup.string().required().min(8).label(i18n.t('Password')),
         password_confirmation: Yup.string()
-            .oneOf([Yup.ref("password"), null], "Hasła muszą się zgadzać")
-            .label("Potwierdź hasło"),
+            .oneOf([Yup.ref("password"), null], i18n.t('Passwords must match'))
+            .label(i18n.t('Repeat password')),
     });
 
     const handleSubmit = async (userInfo) => {
@@ -36,7 +37,7 @@ const RegisterScreen = ({ navigation }) => {
             setLoading(false);
             if (response.data) setError(response.data.errors.email[0]);
             else {
-                alert("Nie udało się zarejestrować.");
+                alert(i18n.t('There was an error, try again later'));
             }
             return;
         }
@@ -70,7 +71,7 @@ const RegisterScreen = ({ navigation }) => {
                                 autoCorrect={false}
                                 icon="account"
                                 name="name"
-                                placeholder="Nazwa użytkownika"
+                                placeholder={i18n.t('Name')}
                                 textContentType="name"
                             />
                             <AppFormField
@@ -79,7 +80,7 @@ const RegisterScreen = ({ navigation }) => {
                                 icon="email"
                                 keyboardType="email-address"
                                 name="email"
-                                placeholder="Email"
+                                placeholder={i18n.t('Email')}
                                 textContentType="emailAddress"
                             />
                             <AppFormField
@@ -87,7 +88,7 @@ const RegisterScreen = ({ navigation }) => {
                                 autoCorrect={false}
                                 icon="lock"
                                 name="password"
-                                placeholder="Hasło"
+                                placeholder={i18n.t('Password')}
                                 secureTextEntry
                                 textContentType="newPassword"
                             />
@@ -96,23 +97,23 @@ const RegisterScreen = ({ navigation }) => {
                                 autoCorrect={false}
                                 icon="lock"
                                 name="password_confirmation"
-                                placeholder="Potwierdź hasło"
+                                placeholder={i18n.t('Repeat password')}
                                 secureTextEntry
                                 textContentType="newPassword"
                             />
                             <ErrorMessage error={error} visible={error} />
-                            <SubmitButton title="Zarejestruj się" />
+                            <SubmitButton title={i18n.t('Register')} />
                         </AppForm>
                     </View>
                     <View style={styles.loginContainer}>
                         <AppText style={styles.loginText}>
-                            Masz już konto?
+                            {i18n.t('Already have an account?')}
                         </AppText>
                         <AppText
                             style={styles.loginLink}
                             onPress={() => navigation.navigate(routes.LOGIN)}
                         >
-                            Zaloguj się
+                            {i18n.t('Log in')}
                         </AppText>
                     </View>
                 </View>

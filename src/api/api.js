@@ -1,8 +1,9 @@
 import { create } from "apisauce";
 import authStorage from "../auth/storage";
+import settings from "../config/settings";
 
 const api = create({
-    baseURL: "http://192.168.1.17/api",
+    baseURL: settings.apiUrl,
     headers: {
         Accept: "application/json",
     },

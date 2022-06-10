@@ -11,16 +11,17 @@ import routes from "../../navigation/routes";
 import LoadingScreen from "../LoadingScreen";
 import AppDatePicker from "../../components/forms/AppDatePicker";
 import dayjs from "dayjs";
+import i18n from "../../config/i18n";
 
 const RepairCreateScreen = ({ navigation, route }) => {
     const [loading, setLoading] = useState(false);
     const car = route.params.car;
     const validationSchema = Yup.object().shape({
         title: Yup.string()
-            .required("Tytuł naprawy jest wymagany")
-            .label("Tytuł naprawy"),
-        milage: Yup.string().label("Przebieg"),
-        description: Yup.string().label("Opis"),
+            .required(i18n.t('Title is required'))
+            .label(i18n.t('Repair title')),
+        milage: Yup.string().label(i18n.t('Mialge')),
+        description: Yup.string().label(i18n.t('Description')),
     });
 
     const handleSubmit = async (repair) => {
@@ -28,7 +29,7 @@ const RepairCreateScreen = ({ navigation, route }) => {
         const response = await repairsApi.addRepair(car, repair);
         setLoading(false);
 
-        if (!response.ok) return alert("Nie udało się zapisać samochodu.");
+        if (!response.ok) return alert(i18n.t('There was an error, try again later'));
         return navigation.push(routes.REPAIRS, { car });
     };
 
@@ -36,7 +37,7 @@ const RepairCreateScreen = ({ navigation, route }) => {
         <AppScreen>
             <LoadingScreen visible={loading} />
             <View style={styles.container}>
-                <AppText style={styles.title}>Dodawanie naprawy</AppText>
+                <AppText style={styles.title}>{i18n.t('Adding a repair')}</AppText>
                 <View>
                     <AppForm
                         initialValues={{
@@ -54,7 +55,7 @@ const RepairCreateScreen = ({ navigation, route }) => {
                             icon="wrench"
                             keyboardType="email-address"
                             name="title"
-                            placeholder="Tytuł naprawy"
+                            placeholder={i18n.t('Repair title')}
                         />
                         <AppFormField
                             autoCapitalize="none"
@@ -62,17 +63,17 @@ const RepairCreateScreen = ({ navigation, route }) => {
                             icon="speedometer"
                             keyboardType="numeric"
                             name="milage"
-                            placeholder="Przebieg"
+                            placeholder={i18n.t('Milage')}
                         />
                         <AppDatePicker name="date" />
                         <AppFormField
                             autoCorrect={true}
                             icon="dots-horizontal-circle-outline"
                             name="description"
-                            placeholder="Opis"
+                            placeholder={i18n.t('Description')}
                             multiline
                         />
-                        <SubmitButton title="Dodaj naprawę" />
+                        <SubmitButton title={i18n.t('Add repair')} />
                     </AppForm>
                 </View>
                 <View></View>
