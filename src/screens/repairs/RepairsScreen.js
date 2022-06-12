@@ -4,9 +4,7 @@ import repairsApi from "../../api/repairs";
 import AddButton from "../../components/AddButton";
 import AppScreen from "../../components/AppScreen";
 import AppText from "../../components/AppText";
-import ListItem from "../../components/ListItem";
-import ListItemDeleteAction from "../../components/ListItem/ListItemDeleteAction";
-import ListItemEditAction from "../../components/ListItem/ListItemEditAction";
+import RepairListItem from "../../components/RepairListItem";
 import i18n from "../../config/i18n";
 import colors from "../../constants/colors";
 import routes from "../../navigation/routes";
@@ -15,6 +13,7 @@ import LoadingScreen from "../LoadingScreen";
 const RepairsScreen = ({ navigation, route }) => {
     const [repairs, setRepairs] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const car = route.params.car;
 
     useEffect(() => {
@@ -31,26 +30,6 @@ const RepairsScreen = ({ navigation, route }) => {
         setRepairs(response.data.repairs);
     };
 
-    const handleDelete = async (repair) => {
-        setLoading(true);
-        const response = await repairsApi.deleteRepair(car, repair);
-        setLoading(false);
-
-        if (!response.ok)
-            return alert(i18n.t("There was an error, try again later"));
-        loadRepairs();
-    };
-
-    const handleEdit = async (repair) => {
-        setLoading(true);
-        const response = await repairsApi.editRepair(car, repair);
-        setLoading(false);
-
-        if (!response.ok)
-            return alert(i18n.t("There was an error, try again later"));
-        loadRepairs();
-    };
-
     return (
         <AppScreen>
             <LoadingScreen visible={loading} />
@@ -62,31 +41,24 @@ const RepairsScreen = ({ navigation, route }) => {
                     data={repairs}
                     keyExtractor={(repair) => repair.uuid}
                     renderItem={({ item }) => (
-                        <ListItem
+                        <RepairListItem
                             title={item.title}
                             description={item.description}
                             date={item.date}
                             milage={item.milage}
-                            renderRightActions={() => (
-                                <View style={styles.actionsContainer}>
-                                    <ListItemEditAction
-                                        handleEdit={() =>
-                                            navigation.navigate(
-                                                routes.EDIT_REPAIR,
-                                                { car, repair: item }
-                                            )
-                                        }
-                                    />
-                                    <ListItemDeleteAction
-                                        handleDelete={() => handleDelete(item)}
-                                    />
-                                </View>
-                            )}
+                            onPress={() => {
+                                navigation.navigate(routes.EDIT_REPAIR, {
+                                    car,
+                                    repair: item,
+                                });
+                            }}
                         />
                     )}
                     ItemSeparatorComponent={() => (
                         <View style={{ marginBottom: 10 }}></View>
                     )}
+                    refreshing={refreshing}
+                    onRefresh={loadRepairs}
                 />
             </View>
             <AddButton

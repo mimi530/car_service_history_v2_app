@@ -5,7 +5,7 @@ import AppText from "./AppText";
 import { Swipeable } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function ListItem({
+function CarListItem({
     title,
     description,
     milage,
@@ -28,7 +28,9 @@ function ListItem({
                         </View>
                     )}
                     <View style={styles.content}>
-                        <AppText style={styles.title}>{title}</AppText>
+                        <View style={styles.titleBox}>
+                            <AppText style={styles.title}>{title}</AppText>
+                        </View>
                         {description && (
                             <AppText style={styles.description}>
                                 {description}
@@ -41,9 +43,12 @@ function ListItem({
                                     .replace(/\B(?=(\d{3})+(?!\d))/g, " ") +
                                     " km"}
                             </AppText>
-                            {date && (
-                                <AppText style={styles.date}>{date}</AppText>
-                            )}
+                            <MaterialCommunityIcons
+                                name="arrow-left"
+                                size={20}
+                                color={colors.white}
+                                style={styles.arrow}
+                            />
                         </View>
                     </View>
                 </View>
@@ -52,7 +57,7 @@ function ListItem({
     );
 }
 
-export default ListItem;
+export default CarListItem;
 
 const styles = StyleSheet.create({
     container: {
@@ -96,5 +101,13 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: colors.primary,
         marginBottom: 10,
+    },
+    titleBox: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    arrow: {
+        opacity: 0.5,
     },
 });

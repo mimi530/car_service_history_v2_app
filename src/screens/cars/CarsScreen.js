@@ -4,7 +4,7 @@ import carsApi from "../../api/cars";
 import AddButton from "../../components/AddButton";
 import AppScreen from "../../components/AppScreen";
 import AppText from "../../components/AppText";
-import ListItem from "../../components/ListItem";
+import CarListItem from "../../components/CarListItem";
 import ListItemDeleteAction from "../../components/ListItem/ListItemDeleteAction";
 import ListItemEditAction from "../../components/ListItem/ListItemEditAction";
 import i18n from "../../config/i18n";
@@ -14,6 +14,7 @@ import LoadingScreen from "../LoadingScreen";
 const CarsScreen = ({ navigation }) => {
     const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         loadCars();
@@ -58,7 +59,7 @@ const CarsScreen = ({ navigation }) => {
                     data={cars}
                     keyExtractor={(car) => car.uuid}
                     renderItem={({ item }) => (
-                        <ListItem
+                        <CarListItem
                             title={item.name}
                             milage={item.milage}
                             icon="car-cog"
@@ -87,6 +88,8 @@ const CarsScreen = ({ navigation }) => {
                     ItemSeparatorComponent={() => (
                         <View style={{ marginBottom: 10 }}></View>
                     )}
+                    refreshing={refreshing}
+                    onRefresh={loadCars}
                 />
             </View>
             <AddButton onPress={() => navigation.navigate(routes.ADD_CAR)} />
@@ -108,6 +111,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 20,
         paddingTop: 10,
+        textAlign: "center",
     },
     actionsContainer: {
         flexDirection: "row",
