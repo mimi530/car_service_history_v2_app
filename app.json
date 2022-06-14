@@ -24,7 +24,7 @@
     },
     "android": {
       "package": "pl.mdomzalski.carstory",
-      "versionCode": 1,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#252c39"
